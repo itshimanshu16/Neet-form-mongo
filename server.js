@@ -14,7 +14,15 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const formSchema = new mongoose.Schema({}, { strict: false });
 const FormSubmission = mongoose.model('FormSubmission', formSchema);
-
+app.get('/submit-data', async (req, res) => {
+    try {
+      const data = await FormSubmission.find().limit(500).sort({ _id: -1 }); // latest first
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
 app.post('/submit', async (req, res) => {
   try {
     const entry = new FormSubmission(req.body);
