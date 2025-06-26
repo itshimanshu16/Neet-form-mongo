@@ -21,7 +21,16 @@ app.get('/submit-data', async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   });
-  
+
+app.delete('/delete/:id', async (req, res) => {
+    try {
+      await FormSubmission.findByIdAndDelete(req.params.id);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
 app.post('/submit', async (req, res) => {
   try {
     const entry = new FormSubmission(req.body);
