@@ -8,8 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  
 });
 
 const formSchema = new mongoose.Schema({}, { strict: false });
@@ -32,6 +31,7 @@ app.post('/submit', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+console.log('Mongo URI:', process.env.MONGO_URI);
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
